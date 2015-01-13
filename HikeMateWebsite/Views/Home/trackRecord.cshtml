@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "trackRecord";
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>trackRecord</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <!--<script type="text/javascript" src="http:ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>-->
+    @Styles.Render("~/Content/Template/css/style.css")
+    @Scripts.Render("~/Content/Template/js/cufon-yui.js")
+    @Scripts.Render("~/Content/Template/js/cufon-georgia.js")
+    @Scripts.Render("~/Content/Template/js/jquery-1.4.2.min.js")
+    @Scripts.Render("~/Content/Template/js/script.js")
+
+    <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript">
+        var map = null;
+
+        function getMap() {
+            map = new Microsoft.Maps.Map(document.getElementById("mapDiv"), {
+                credentials: "Ah529bCN8qRinJPDv9Q9UKva834avcqn1eSWQ7ei0oekDKjdc_rfmQgkuUmmBm1w",
+                //center: new Microsoft.Maps.Location(6.9344, 79.8428),
+                //zoom: 7
+            });
+        }
+
+        function addCustomPushpin() {
+
+            var url = "/Home/GetLocations";
+
+            $.getJSON(url, null, function (data) {
+                $.each(data, function (index, LocationData) {
+
+                    var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
+
+                    pushpin.setLocation(new Microsoft.Maps.Location(
+                        LocationData.latitude,
+                        LocationData.longitude));
+                    map.entities.push(pushpin);
+
+                    map.setView({
+                        zoom: 7, center: new Microsoft.Maps.Location(6.9344, 79.8428)
+                    });
+                })
+            })
+        }
+    </script>
+
+
+
+</head>
+<body onload="getMap();">
+    <div class="main">
+        <div class="header">
+            <div class="header_resize">
+                <div class="menu_nav">
+                    <ul>
+                        <li class="active"><a href="~/Home/index"><span>Home Page</span></a></li>
+                        <li><a href=""><span>Contact Us</span></a></li>
+                        <li><a href=""><span>About Us</span></a></li>
+                        <li><a href="~/Home/trackRecord"><span>Track Record</span></a></li>
+                        <li><a href="~/Home/login"><span>LogOut</span></a></li>
+                    </ul>
+                </div>
+                <div class="logo">
+                    <h1><a href="index.html">hike<span>Mate</span></a></h1>
+                </div>
+                <div class="clr"></div>
+                <div class="slider">
+                    <div id="coin-slider"> <a href="#"><img src="~/Content/Template/images/background2.jpg" width="960" height="360" alt="" /></a> <!--</a> <a href="#"><img src="images/slide2.jpg" width="960" height="360" alt="" /> </a> <a href="#"><img src="images/slide3.jpg" width="960" height="360" alt="" /> </a>--> </div>
+                    <div class="clr"></div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content_resize">
+                <div class="mainbar">
+                    <div class="article">
+                        <h2>Map</h2>
+                        <div class="clr"></div>
+                        <div id="mapDiv" style="position:relative; width:600px; height:600px">
+                        </div>
+                    </div>
+                    <div class="article">
+                        <h2>Profile Details</h2>
+                        <div class="clr"></div>
+                        <div class="comment">
+                            <a href="#"><img src="~/Content/Template/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
+                            <p>
+                                <a href="#">User Name</a> Profile Data:<br />
+                            </p>
+                            <ul class="sb_menu">
+                                <li><a href="#"> </a></li>
+                                <li><a href="#">Name</a></li>
+                                <li><a href="#">Email</a></li>
+                                <li><a href="#">Mobile Number</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="article">
+                        <h2>Search for User</h2>
+                        <div class="clr"></div>
+                        <form action="#" method="post" id="leavereply">
+                            <ol>
+                                <li>
+                                    <label for="name">Name (required)</label>
+                                    <input id="name" name="name" class="text" />
+                                </li>
+                                <li>
+                                    <label for="email">Email Address (required)</label>
+                                    <input id="email" name="email" class="text" />
+                                </li>
+                                <li>
+                                    <label for="website">Show Locations</label>
+                                    <input type="button" id="btnShowLocations" value="Show Locations" onclick="addCustomPushpin();" />
+                                </li>
+                                <!--<li>
+                                    <input type="image" name="imageField" id="imageField" src="~/Content/Template/images/submit.gif" class="send"   />
+                                    <div class="clr"></div>
+                                </li>-->
+                            </ol>
+                        </form>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="searchform">
+                        <form id="formsearch" name="formsearch" method="post" action="#">
+                            <span>
+                                <input name="editbox_search" class="editbox_search" id="editbox_search" maxlength="80" value="Search our ste:" type="text" />
+                            </span>
+                            <input name="button_search" src="~/Content/Template/images/search.gif" class="button_search" type="image" />
+                        </form>
+                    </div>
+                    <div class="gadget">
+                        <h2 class="star"><span>Sidebar</span> Menu</h2>
+                        <div class="clr"></div>
+                        <ul class="sb_menu">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Track Record</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div class="fbg">
+            <div class="fbg_resize">
+                <div class="col c1">
+                    <h2>hikeMate</h2>
+                    <a href="#"><img src="~/Content/Template/images/hikeMateLogo.jpg" width="200" height="200" alt="" class="gal" /></a>
+                </div>
+                <div class="col c2">
+                    <h2><span>Product</span> Overview</h2>
+                </div>
+                <div class="col c3">
+                    <h2><span>Contact</span> Us</h2>
+                    <p class="contact_info">
+                        <span>Address:</span><br />
+                        <span>Telephone:</span><br />
+                        <span>FAX:</span><br />
+                        <span>Others:</span><br />
+                        <span>E-mail:</span>
+                    </p>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer_resize">
+                <p class="lf">&copy; Copyright <a href="#">hikeMate</a>.</p>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+    </div>>
+</body>
+</html>
+
